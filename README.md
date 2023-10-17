@@ -25,6 +25,7 @@ To run this system locally, follow these steps:
 4. Install dependencies: `npm install`
 
 5. You must create your database on your server and on your `.env` file update the following lines
+
     `DB_CONNECTION=mysql
      DB_HOST=127.0.0.1
      DB_PORT=3306
@@ -32,17 +33,17 @@ To run this system locally, follow these steps:
      DB_USERNAME=homestead
      DB_PASSWORD=secret`
 
-6. Artisan Commands
+7. Artisan Commands
 The first thing we are going to do is set the key that Laravel will use when doing encryption.
 `php artisan key:generate`
 
-7. run `php artisan migrate` to create database tables
+8. run `php artisan migrate` to create database tables
 
-8. run `php artisan db:seed` to fill database with demo credentials
+9. run `php artisan db:seed` to fill database with demo credentials
 
-9. run `npm run dev`
+10. run `npm run dev`
 
-10. Storage:link
+11. Storage:link
 After your project is installed you must run this command to link your public storage folder for user avatar uploads:
 
 `php artisan storage:link`
