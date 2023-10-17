@@ -1,7 +1,5 @@
 # Blood Bucket
 
-## Introduction
-
 Welcome to the Blood Bucket, a platform designed to facilitate blood donation and save lives. This Readme provides essential information for users.
 
 ## Features
@@ -24,7 +22,7 @@ To run this system locally, follow these steps:
 
 4. Install dependencies: `npm install`
 
-5. You must create your database on your server and on your `.env` file update the following lines
+5. You must create your database on your server and on your `.env` file update the following lines.
 
 `DB_CONNECTION=mysql`
 `DB_HOST=127.0.0.1`
