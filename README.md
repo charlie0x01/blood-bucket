@@ -1,15 +1,53 @@
-## Laravel Boilerplate (Current: Laravel 8.*) ([Demo](https://demo.laravel-boilerplate.com))
+# Blood Bucket
 
-[![Latest Stable Version](https://poser.pugx.org/rappasoft/laravel-boilerplate/v/stable)](https://packagist.org/packages/rappasoft/laravel-boilerplate)
-[![Latest Unstable Version](https://poser.pugx.org/rappasoft/laravel-boilerplate/v/unstable)](https://packagist.org/packages/rappasoft/laravel-boilerplate) 
-<br/>
-[![StyleCI](https://styleci.io/repos/30171828/shield?style=plastic)](https://github.styleci.io/repos/30171828)
-![Tests](https://github.com/rappasoft/laravel-boilerplate/workflows/Tests/badge.svg?branch=master)
-<br/>
-![GitHub contributors](https://img.shields.io/github/contributors/rappasoft/laravel-boilerplate.svg)
-![GitHub stars](https://img.shields.io/github/stars/rappasoft/laravel-boilerplate.svg?style=social)
+## Introduction
 
-### Enjoying this project? [Buy me a beer 🍺](https://www.buymeacoffee.com/rappasoft)
+Welcome to the Blood Bucket, a platform designed to facilitate blood donation and save lives. This Readme provides essential information for users.
+
+## Features
+
+- **User Registration**: Users can create accounts, complete profiles, and manage their donation or blood receiving history.
+
+- **Search and Donation Matching**: Find blood match with donors based on blood type and location.
+
+- **Educational Resources**: Access information on the importance of blood donation and health benefits.
+
+## Installation
+
+To run this system locally, follow these steps:
+
+1. Clone the repository: `git clone https://github.com/charlie0x01/blood-bucket.git`
+
+2. Find `.env.example` file in the root of the project and rename this file to `.env`
+   
+3. Navigate into your project in terminal and run `composer install` to install dependencies.
+
+4. Install dependencies: `npm install`
+
+5. You must create your database on your server and on your `.env` file update the following lines
+    `DB_CONNECTION=mysql
+     DB_HOST=127.0.0.1
+     DB_PORT=3306
+     DB_DATABASE=homestead
+     DB_USERNAME=homestead
+     DB_PASSWORD=secret`
+
+6. Artisan Commands
+The first thing we are going to do is set the key that Laravel will use when doing encryption.
+`php artisan key:generate`
+
+7. run `php artisan migrate` to create database tables
+
+8. run `php artisan db:seed` to fill database with demo credentials
+
+9. run `npm run dev`
+
+10. Storage:link
+After your project is installed you must run this command to link your public storage folder for user avatar uploads:
+
+`php artisan storage:link`
+
+11. run `php artisan serve` to run project.
 
 ### Demo Credentials
 
@@ -18,30 +56,6 @@
 
 **User:** user@user.com  
 **Password:** secret
-
-### Official Documentation
-
-[Click here for the official documentation](http://laravel-boilerplate.com)
-
-### Slack Channel
-
-Please join us in our Slack channel to get faster responses to your questions. Get your invite here: https://laravel-5-boilerplate.herokuapp.com
-
-### Introduction
-
-Laravel Boilerplate provides you with a massive head start on any size web application. Out of the box it has features like a backend built on CoreUI with Spatie/Permission authorization. It has a frontend scaffold built on Bootstrap 4. Other features such as Two Factor Authentication, User/Role management, searchable/sortable tables built on my [Laravel Livewire tables plugin](https://github.com/rappasoft/laravel-livewire-tables), user impersonation, timezone support, multi-lingual support with 20+ built in languages, demo mode, and much more.
-
-### Issues
-
-If you come across any issues please [report them here](https://github.com/rappasoft/laravel-boilerplate/issues).
-
-### Contributing
-
-Thank you for considering contributing to the Laravel Boilerplate project! Please feel free to make any pull requests, or e-mail me a feature request you would like to see in the future to Anthony Rappa at rappa819@gmail.com.
-
-### Security Vulnerabilities
-
-If you discover a security vulnerability within this boilerplate, please send an e-mail to Anthony Rappa at rappa819@gmail.com, or create a pull request if possible. All security vulnerabilities will be promptly addressed.
 
 ### License
 
