@@ -26,15 +26,16 @@ To run this system locally, follow these steps:
 
 5. You must create your database on your server and on your `.env` file update the following lines
 
-    `DB_CONNECTION=mysql
-     DB_HOST=127.0.0.1
-     DB_PORT=3306
-     DB_DATABASE=homestead
-     DB_USERNAME=homestead
-     DB_PASSWORD=secret`
+`DB_CONNECTION=mysql`
+`DB_HOST=127.0.0.1`
+`DB_PORT=3306`
+`DB_DATABASE=homestead`
+`DB_USERNAME=homestead`
+`DB_PASSWORD=secret`
 
 7. Artisan Commands
 The first thing we are going to do is set the key that Laravel will use when doing encryption.
+
 `php artisan key:generate`
 
 8. run `php artisan migrate` to create database tables
