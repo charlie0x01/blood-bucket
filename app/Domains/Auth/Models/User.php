@@ -41,6 +41,8 @@ class User extends Authenticatable implements MustVerifyEmail, TwoFactorAuthenti
 
     public const TYPE_ADMIN = 'admin';
     public const TYPE_USER = 'user';
+    public const TYPE_DONOR = 'donor';
+    public const TYPE_RECIPIENT = 'recipient';
 
     /**
      * The attributes that are mass assignable.
@@ -61,6 +63,11 @@ class User extends Authenticatable implements MustVerifyEmail, TwoFactorAuthenti
         'to_be_logged_out',
         'provider',
         'provider_id',
+        'contact_no',
+        'city_id',
+        'blood_group_id',
+        'gender',
+        'age'
     ];
 
     /**

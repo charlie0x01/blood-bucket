@@ -2,12 +2,7 @@
     <table class="table table-striped table-hover table-bordered mb-0">
         <tr>
             <th>@lang('Type')</th>
-            <td>@include('backend.auth.user.includes.type', ['user' => $logged_in_user])</td>
-        </tr>
-
-        <tr>
-            <th>@lang('Avatar')</th>
-            <td><img src="{{ $logged_in_user->avatar }}" class="user-profile-image" /></td>
+            <td>{{ ucfirst($logged_in_user->type) }}</td>
         </tr>
 
         <tr>

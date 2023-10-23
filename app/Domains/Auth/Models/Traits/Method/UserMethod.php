@@ -33,6 +33,16 @@ trait UserMethod
         return $this->type === self::TYPE_USER;
     }
 
+    public function isDonor(): bool
+    {
+        return $this->type === self::TYPE_DONOR;
+    }
+
+    public function isRecipient(): bool
+    {
+        return $this->type === self::TYPE_RECIPIENT;
+    }
+
     /**
      * @return mixed
      */

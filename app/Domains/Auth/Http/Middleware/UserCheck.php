@@ -17,7 +17,7 @@ class UserCheck
      */
     public function handle($request, Closure $next)
     {
-        if ($request->user() && $request->user()->isType(User::TYPE_USER)) {
+        if ($request->user() && ($request->user()->isType(User::TYPE_USER) || $request->user()->isType(User::TYPE_DONOR) || $request->user()->isType(User::TYPE_RECIPIENT)) ) {
             return $next($request);
         }
 

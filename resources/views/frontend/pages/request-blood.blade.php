@@ -1,6 +1,6 @@
 @extends('frontend.layouts.app')
 
-@section('title', __('Register'))
+@section('title', __('Terms & Conditions'))
 
 @section('content')
 <div class="container py-4">
@@ -8,7 +8,7 @@
         <div class="col-md-8">
             <x-frontend.card>
                 <x-slot name="header">
-                    @lang('Register')
+                    @lang('Request Blood')
                 </x-slot>
 
                 <x-slot name="body">
@@ -61,18 +61,6 @@
 
                             <div class="col-md-6">
                                 <input id="age" type="number" min="18" max="60" class="form-control" name="age" required>
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="type" class="col-md-4 col-form-label text-md-right">{{ __('User Type') }}</label>
-
-                            <div class="col-md-6">
-                                <select name="type" class="form-control" aria-label="">
-                                    <option selected>-- Select User Type --</option>
-                                    <option value="donor">Donor</option>
-                                    <option value="recipient">Recipient</option>
-                                </select>
                             </div>
                         </div>
 

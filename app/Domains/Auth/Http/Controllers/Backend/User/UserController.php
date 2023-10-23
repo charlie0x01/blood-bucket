@@ -71,7 +71,7 @@ class UserController
      * @throws \App\Exceptions\GeneralException
      * @throws \Throwable
      */
-    public function store(StoreUserRequest $request)
+    public function (StoreUserRequest $request)
     {
         $user = $this->userService->store($request->validated());
 

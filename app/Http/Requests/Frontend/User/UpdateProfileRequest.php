@@ -32,6 +32,11 @@ class UpdateProfileRequest extends FormRequest
             'email' => [Rule::requiredIf(function () {
                 return config('boilerplate.access.user.change_email');
             }), 'max:255', 'email', Rule::unique('users')->ignore($this->user()->id)],
+            'contact_no' => ['required', 'digits:11'],
+            'blood_group_id' => ['required', 'numeric'],
+            'city_id' => ['required', 'numeric'],
+            'age' => ['required', 'numeric', 'digits:2'],
+            'gender' => ['required'],
         ];
     }
 }

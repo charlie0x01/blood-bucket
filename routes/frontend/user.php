@@ -19,6 +19,10 @@ Route::group(['as' => 'user.', 'middleware' => ['auth', 'password.expires', conf
                 ->push(__('Dashboard'), route('frontend.user.dashboard'));
         });
 
+    Route::get("need-blood", [DashboardController::class, 'needBlood']);
+    Route::get("donate", [DashboardController::class, 'donateBlood']);
+    Route::get("request-blood", [DashboardController::class, 'requestBlood']);
+
     Route::get('account', [AccountController::class, 'index'])
         ->name('account')
         ->breadcrumbs(function (Trail $trail) {

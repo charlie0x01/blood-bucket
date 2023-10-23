@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Frontend\User;
 
+use App\Models\BloodGroup;
+use App\Models\City;
+
 /**
  * Class AccountController.
  */
@@ -12,6 +15,11 @@ class AccountController
      */
     public function index()
     {
-        return view('frontend.user.account');
+
+        // blood group
+        $blood_groups = BloodGroup::all();
+        // cities
+        $cities = City::all();
+        return view('frontend.user.account', ['cities' => $cities, 'blood_groups' => $blood_groups]);
     }
 }

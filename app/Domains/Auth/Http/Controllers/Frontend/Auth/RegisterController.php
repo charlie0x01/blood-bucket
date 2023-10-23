@@ -3,6 +3,8 @@
 namespace App\Domains\Auth\Http\Controllers\Frontend\Auth;
 
 use App\Domains\Auth\Services\UserService;
+use App\Models\BloodGroup;
+use App\Models\City;
 use App\Rules\Captcha;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Validator;
@@ -60,8 +62,12 @@ class RegisterController
     public function showRegistrationForm()
     {
         abort_unless(config('boilerplate.access.user.registration'), 404);
+        // get cities
+        $cities = City::all();
+        // get blood groups
+        $blood_groups = BloodGroup::all();
 
-        return view('frontend.auth.register');
+        return view('frontend.auth.register', ['cities' => $cities, 'blood_groups' => $blood_groups]);
     }
 
     /**
@@ -76,10 +82,19 @@ class RegisterController
             'name' => ['required', 'string', 'max:100'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')],
             'password' => array_merge(['max:100'], PasswordRules::register($data['email'] ?? null)),
+            'type' => ['required', 'string', 'regex:(donor|recipient)'],
+            'gender' => ['required', 'string', 'regex:(male|female)'],
+            'contact_no' => ['required', 'numeric', 'digits:11'],
+            'age' => ['required', 'numeric', 'digits:2'],
+            'blood_group_id' => ['required', 'numeric'],
+            'city_id' => ['required', 'numeric'],
             'terms' => ['required', 'in:1'],
             'g-recaptcha-response' => ['required_if:captcha_status,true', new Captcha],
         ], [
             'terms.required' => __('You must accept the Terms & Conditions.'),
+            'blood_group_id.required' => __('You must select a blood group.'),
+            'city_id.required' => __('You must select a city.'),
+            'contact_no.required' => __('You must enter your contact no.'),
             'g-recaptcha-response.required_if' => __('validation.required', ['attribute' => 'captcha']),
         ]);
     }

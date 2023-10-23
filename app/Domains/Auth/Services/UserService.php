@@ -59,7 +59,8 @@ class UserService extends BaseService
         } catch (Exception $e) {
             DB::rollBack();
 
-            throw new GeneralException(__('There was a problem creating your account.'));
+            throw new GeneralException(__($e->getMessage()));
+            // throw new GeneralException(__('There was a problem creating your account.'));
         }
 
         DB::commit();
@@ -118,6 +119,11 @@ class UserService extends BaseService
                 'name' => $data['name'],
                 'email' => $data['email'],
                 'password' => $data['password'],
+                'contact_no' => $data['contact_no'],
+                'age' => $data['age'],
+                'gender' => $data['gender'],
+                'city_id' => $data['city_id'],
+                'blood_group_id' => $data['blood_group_id'],
                 'email_verified_at' => isset($data['email_verified']) && $data['email_verified'] === '1' ? now() : null,
                 'active' => isset($data['active']) && $data['active'] === '1',
             ]);
@@ -161,6 +167,11 @@ class UserService extends BaseService
                 'type' => $user->isMasterAdmin() ? $this->model::TYPE_ADMIN : $data['type'] ?? $user->type,
                 'name' => $data['name'],
                 'email' => $data['email'],
+                'contact_no' => $data['contact_no'],
+                'age' => $data['age'],
+                'gender' => $data['gender'],
+                'blood_group_id' => $data['blood_group_id'],
+                'city_id' => $data['city_id']
             ]);
 
             if (! $user->isMasterAdmin()) {
@@ -192,10 +203,16 @@ class UserService extends BaseService
     public function updateProfile(User $user, array $data = []): User
     {
         $user->name = $data['name'] ?? null;
+        $user->age = $data['age'] ?? $user->age;
+        $user->gender = $data['gender'] ?? $user->gender;
+        $user->contact_no = $data['contact_no'] ?? $user->contact_no;
+        $user->blood_group_id = $data['blood_group_id'] ?? $user->blood_group_id;
+        $user->city_id = $data['city_id'] ?? $user->city_id;
 
         if ($user->canChangeEmail() && $user->email !== $data['email']) {
             $user->email = $data['email'];
             $user->email_verified_at = null;
+            
             $user->sendEmailVerificationNotification();
             session()->flash('resent', true);
         }
@@ -323,6 +340,11 @@ class UserService extends BaseService
             'type' => $data['type'] ?? $this->model::TYPE_USER,
             'name' => $data['name'] ?? null,
             'email' => $data['email'] ?? null,
+            'contact_no' => $data['contact_no'],
+            'age' => $data['age'],
+            'gender' => $data['gender'],
+            'blood_group_id' => $data['blood_group_id'],
+            'city_id' => $data['city_id'],
             'password' => $data['password'] ?? null,
             'provider' => $data['provider'] ?? null,
             'provider_id' => $data['provider_id'] ?? null,

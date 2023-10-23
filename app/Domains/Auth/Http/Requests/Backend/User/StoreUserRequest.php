@@ -30,10 +30,15 @@ class StoreUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'type' => ['required', Rule::in([User::TYPE_ADMIN, User::TYPE_USER])],
+            'type' => ['required', Rule::in([User::TYPE_ADMIN, User::TYPE_USER, User::TYPE_DONOR, User::TYPE_RECIPIENT])],
             'name' => ['required', 'max:100'],
             'email' => ['required', 'max:255', 'email', Rule::unique('users')],
             'password' => ['max:100', PasswordRules::register($this->email)],
+            'age' => ['digits:2'],
+            'gender' => ['regex:(male|female)'],
+            'contact_no' => ['digits:13'],
+            'blood_group_id' => ['numeric'],
+            'city_id' => ['numeric'],
             'active' => ['sometimes', 'in:1'],
             'email_verified' => ['sometimes', 'in:1'],
             'send_confirmation_email' => ['sometimes', 'in:1'],

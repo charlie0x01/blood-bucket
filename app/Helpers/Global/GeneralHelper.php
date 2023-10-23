@@ -10,7 +10,7 @@ if (! function_exists('appName')) {
      */
     function appName()
     {
-        return config('app.name', 'Laravel Boilerplate');
+        return config('app.name', 'Blood Bucket');
     }
 }
 
@@ -41,8 +41,13 @@ if (! function_exists('homeRoute')) {
             if (auth()->user()->isAdmin()) {
                 return 'admin.dashboard';
             }
-
             if (auth()->user()->isUser()) {
+                return 'frontend.user.dashboard';
+            }
+            if (auth()->user()->isDonor()) {
+                return 'frontend.user.dashboard';
+            }
+            if (auth()->user()->isRecipient()) {
                 return 'frontend.user.dashboard';
             }
         }

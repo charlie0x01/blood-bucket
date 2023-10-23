@@ -46,7 +46,7 @@
                                         aria-selected="false" />
                                 @endif
 
-                                <x-utils.link
+                                <!-- <x-utils.link
                                     :text="__('Two Factor Authentication')"
                                     class="nav-link"
                                     id="two-factor-authentication-tab"
@@ -54,7 +54,7 @@
                                     href="#two-factor-authentication"
                                     role="tab"
                                     aria-controls="two-factor-authentication"
-                                    aria-selected="false"/>
+                                    aria-selected="false"/> -->
                             </div>
                         </nav>
 
