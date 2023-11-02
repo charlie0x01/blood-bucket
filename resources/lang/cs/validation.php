@@ -131,6 +131,9 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'gender' => [
+            'regex:(male:female)' => 'you must select gender'
+        ],
     ],
 
     /*

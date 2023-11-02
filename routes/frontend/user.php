@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\BloodRequestController;
 use App\Http\Controllers\Frontend\User\AccountController;
 use App\Http\Controllers\Frontend\User\DashboardController;
 use App\Http\Controllers\Frontend\User\ProfileController;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 use Tabuna\Breadcrumbs\Trail;
 
 /*
@@ -19,9 +21,8 @@ Route::group(['as' => 'user.', 'middleware' => ['auth', 'password.expires', conf
                 ->push(__('Dashboard'), route('frontend.user.dashboard'));
         });
 
-    Route::get("need-blood", [DashboardController::class, 'needBlood']);
-    Route::get("donate", [DashboardController::class, 'donateBlood']);
-    Route::get("request-blood", [DashboardController::class, 'requestBlood']);
+    Route::get("request-blood", [BloodRequestController::class, 'requestBlood']);
+    Route::get("request-blood/{id}/edit", [BloodRequestController::class, 'editRequest']);
 
     Route::get('account', [AccountController::class, 'index'])
         ->name('account')
@@ -31,4 +32,6 @@ Route::group(['as' => 'user.', 'middleware' => ['auth', 'password.expires', conf
         });
 
     Route::patch('profile/update', [ProfileController::class, 'update'])->name('profile.update');
+    // request blood
+    Route::post('request-blood/send', [BloodRequestController::class, 'send']);;
 });

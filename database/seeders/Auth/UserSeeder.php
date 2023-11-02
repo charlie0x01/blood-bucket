@@ -30,16 +30,16 @@ class UserSeeder extends Seeder
             'active' => true,
         ]);
 
-        if (app()->environment(['local', 'testing'])) {
-            User::create([
-                'type' => User::TYPE_USER,
-                'name' => 'Test User',
-                'email' => 'user@user.com',
-                'password' => 'secret',
-                'email_verified_at' => now(),
-                'active' => true,
-            ]);
-        }
+        // if (app()->environment(['local', 'testing'])) {
+        //     User::create([
+        //         'type' => User::TYPE_USER,
+        //         'name' => 'Test User',
+        //         'email' => 'user@user.com',
+        //         'password' => 'secret',
+        //         'email_verified_at' => now(),
+        //         'active' => true,
+        //     ]);
+        // }
 
         $this->enableForeignKeys();
     }

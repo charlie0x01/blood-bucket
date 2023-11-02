@@ -1,50 +1,27 @@
 @extends('frontend.layouts.app')
 
-@section('title', __('Terms & Conditions'))
+@section('title', __('Blood Request'))
 
 @section('content')
 <div class="container py-4">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <x-frontend.card>
-                <x-slot name="header">
-                    @lang('Request Blood')
-                </x-slot>
+            <div class="card">
+                <div class="card-header">
+                    <h4>@lang('Request Blood')</h4>
+                </div>
 
-                <x-slot name="body">
-                    <x-forms.post :action="route('frontend.auth.register')">
+                <div class="card-body">
+                    <form action="/request-blood/send" method="POST">
+                        @csrf
                         <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">@lang('Name')</label>
+                            <label for="recipient_name" class="col-md-4 col-form-label text-md-right">@lang('Recipent Name')</label>
 
                             <div class="col-md-6">
-                                <input type="text" name="name" id="name" class="form-control" value="{{ old('name') }}" placeholder="{{ __('Name') }}" maxlength="100" required autofocus autocomplete="name" />
+                                <input type="text" name="recipient_name" id="recipient_name" class="form-control" value="{{ old('recipient_name') }}" placeholder="{{ __('Recipient Name') }}" maxlength="100" required autofocus />
                             </div>
                         </div><!--form-group-->
 
-                        <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">@lang('E-mail Address')</label>
-
-                            <div class="col-md-6">
-                                <input type="email" name="email" id="email" class="form-control" placeholder="{{ __('E-mail Address') }}" value="{{ old('email') }}" maxlength="255" required autocomplete="email" />
-                            </div>
-                        </div><!--form-group-->
-
-                        <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">@lang('Password')</label>
-
-                            <div class="col-md-6">
-                                <input type="password" name="password" id="password" class="form-control" placeholder="{{ __('Password') }}" maxlength="100" required autocomplete="new-password" />
-                            </div>
-                        </div><!--form-group-->
-
-                        <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">@lang('Password Confirmation')</label>
-
-                            <div class="col-md-6">
-                                <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" placeholder="{{ __('Password Confirmation') }}" maxlength="100" required autocomplete="new-password" />
-                            </div>
-                        </div><!--form-group-->
-                        
                         <div class="row mb-3">
                             <label for="gender" class="col-md-4 col-form-label text-md-right">{{ __('Gender') }}</label>
 
@@ -54,13 +31,16 @@
                                     <option value="male">Male</option>
                                     <option value="female">Female</option>
                                 </select>
+                                @if($errors->has('gender'))
+                                <span class="text-danger">You must select gender</span>
+                                @endif
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="age" class="col-md-4 col-form-label text-md-right">{{ __('Age') }}</label>
 
                             <div class="col-md-6">
-                                <input id="age" type="number" min="18" max="60" class="form-control" name="age" required>
+                                <input id="age" type="number" min="1" class="form-control" name="age" required value="{{ old('age') }}">
                             </div>
                         </div>
 
@@ -74,6 +54,9 @@
                                     <option value="{{ $blood_group->id }}">{{ $blood_group->name }}</option>
                                     @endforeach
                                 </select>
+                                @if($errors->has('blood_group_id'))
+                                <span class="text-danger">You must select blood group</span>
+                                @endif
                             </div>
                         </div>
 
@@ -87,6 +70,9 @@
                                     <option value="{{ $city->id }}">{{ $city->name }}</option>
                                     @endforeach
                                 </select>
+                                @if($errors->has('city_id'))
+                                <span class="text-danger">You must select city</span>
+                                @endif
                             </div>
                         </div>
 
@@ -94,38 +80,34 @@
                             <label for="contact_no" class="col-md-4 col-form-label text-md-right">{{ __('Contact No.') }}</label>
 
                             <div class="col-md-6">
-                                <input id="contact_no" type="number" class="form-control" name="contact_no" required>
+                                <input id="contact_no" type="number" class="form-control" name="contact_no" required value="{{ old('contact_no') }}">
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="form-check">
-                                    <input type="checkbox" name="terms" value="1" id="terms" class="form-check-input" required>
-                                    <label class="form-check-label" for="terms">
-                                        @lang('I agree to the') <a href="{{ route('frontend.pages.terms') }}" target="_blank">@lang('Terms & Conditions')</a>
-                                    </label>
-                                </div>
-                            </div>
-                        </div><!--form-group-->
+                        <div class="row mb-3">
+                            <label for="address" class="col-md-4 col-form-label text-md-right">{{ __('Address (where you need blood)') }}</label>
 
-                        @if(config('boilerplate.access.captcha.registration'))
-                        <div class="row">
-                            <div class="col">
-                                @captcha
-                                <input type="hidden" name="captcha_status" value="true" />
-                            </div><!--col-->
-                        </div><!--row-->
-                        @endif
+                            <div class="col-md-6">
+                                <input id="address" type="text" class="form-control" name="address" required value="{{ old('address') }}">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="hospital_name" class="col-md-4 col-form-label text-md-right">{{ __('Hospital Name (optional)') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="hospital_name" type="text" class="form-control" name="hospital_name" value="{{ old('hospital_name') }}">
+                            </div>
+                        </div>
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <button class="btn btn-primary" type="submit">@lang('Register')</button>
+                                <button class="btn btn-primary" type="submit">@lang('Send Request')</button>
                             </div>
                         </div><!--form-group-->
-                    </x-forms.post>
-                </x-slot>
-            </x-frontend.card>
+                    </form>
+                </div>
+            </div>
         </div><!--col-md-8-->
     </div><!--row-->
 </div><!--container-->
