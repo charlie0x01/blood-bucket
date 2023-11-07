@@ -166,6 +166,21 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'gender' => [
+            'in' => 'Please select a valid gender (Male or Female).',
+        ],
+        'blood_group_id' => [
+            'numeric' => 'Please select a blood group.',
+        ],
+        'city_id' => [
+            'numeric' => 'Please select a city.',
+        ],
+        'type' => [
+            'in' => 'Please select a valid type (Donor or Recipient).',
+        ],
+        'avatar' => [
+            'required' => 'Please upload a profile picture.',
+        ],
     ],
 
     /*
