@@ -80,12 +80,13 @@ class ProfileController extends Controller
     public function remove(Request $request): RedirectResponse
     {
         $user = User::find(Auth::id());
-        // if ($user->avatar != null)
-        //     if (Storage::disk('public')->exists(`$user->avatar`)) {
-        //         Storage::disk('public')->delete(`$user->avatar`);
-        //     }
-        $user->avatar = null;
-        $user->update();
+        if ($user->avatar != null) {
+            if (Storage::disk('public')->exists(`$user->avatar`)) {
+                Storage::disk('public')->delete(`$user->avatar`);
+            }
+        }
+        // $user->avatar = null;
+        // $user->update();
         return Redirect::route('profile.edit')->with('status', 'avatar-removed');
     }
 

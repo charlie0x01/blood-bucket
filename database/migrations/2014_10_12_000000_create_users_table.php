@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('avatar')->nullable();
             $table->string('email')->unique();
-            $table->string('age')->nullable();
+            $table->float('age', 5, 2)->nullable();
             $table->string('contact_no', 13)->unique()->nullable();
             $table->string('gender', 6)->nullable();
             $table->timestamp('email_verified_at')->nullable();

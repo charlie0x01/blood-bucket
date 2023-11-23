@@ -19,10 +19,10 @@
 
         <div class="mt-4">
             <label for="type" class="block font-medium text-sm text-gray-700">User Type</label>
-            <select onchange="setAgeLimit(event)" id="usertype" name="type" class="block w-full mt-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                <option selected class="rounded-md border-gray-300 bg-white text-gray-900 focus:ring-indigo-200 focus:border-indigo-300">-- Select User Type --</option>
-                <option value="donor" @if (old('type')=='donor' ) selected @endif class="rounded-md border-gray-300 bg-white text-gray-900 focus:ring-indigo-200 focus:border-indigo-300">Donor</option>
-                <option value="recipient" @if (old('type')=='recipient' ) selected @endif class="rounded-md border-gray-300 bg-white text-gray-900 focus:ring-indigo-200 focus:border-indigo-300">Recipient</option>
+            <select onchange="setAgeLimit(event)" id="usertype" name="type" class="block w-full mt-1 rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                <option selected class="rounded-md border-gray-300 bg-white text-gray-900 focus:ring-blue-200 focus:border-blue-300">-- Select User Type --</option>
+                <option value="donor" @if (old('type')=='donor' ) selected @endif class="rounded-md border-gray-300 bg-white text-gray-900 focus:ring-blue-200 focus:border-blue-300">Donor</option>
+                <option value="recipient" @if (old('type')=='recipient' ) selected @endif class="rounded-md border-gray-300 bg-white text-gray-900 focus:ring-blue-200 focus:border-blue-300">Recipient</option>
                 <x-input-error :messages="$errors->get('type')" class="mt-2" />
             </select>
         </div>
@@ -37,7 +37,7 @@
             <label for="gender" class="block font-medium text-sm text-gray-700">{{ __('Gender') }}</label>
 
             <div class="col-md-6">
-                <select name="gender" class="block w-full mt-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" aria-label="">
+                <select name="gender" class="block w-full mt-1 rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" aria-label="">
                     <option selected>-- Select Gender --</option>
                     <option @if (old('gender')=='male' ) selected @endif value="male">Male</option>
                     <option @if (old('gender')=='female' ) selected @endif value="female">Female</option>
@@ -50,7 +50,7 @@
             <label for="blood_group_id" class="block font-medium text-sm text-gray-700">{{ __('Blood Group') }}</label>
 
             <div class="col-md-6">
-                <select name="blood_group_id" class="block w-full mt-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" aria-label="">
+                <select name="blood_group_id" class="block w-full mt-1 rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" aria-label="">
                     <option selected>-- Select Blood Group --</option>
                     @foreach($blood_groups as $blood_group)
                     <option value="{{ $blood_group->id }}">{{ $blood_group->name }}</option>
@@ -64,7 +64,7 @@
             <label for="city_id" class="block font-medium text-sm text-gray-700">{{ __('City') }}</label>
 
             <div class="col-md-6">
-                <select name="city_id" class="block w-full mt-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" aria-label="">
+                <select name="city_id" class="block w-full mt-1 rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" aria-label="">
                     <option selected>-- Select City --</option>
                     @foreach($cities as $city)
                     <option value="{{ $city->id }}">{{ $city->name }}</option>
@@ -78,7 +78,7 @@
             <label for="contact_no" class="block font-medium text-sm text-gray-700">{{ __('Contact No.') }}</label>
 
             <div class="col-md-6">
-                <input id="contact_no" value="{{ old('contact_no') }}" type="number" class="block w-full mt-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="contact_no" required>
+                <input id="contact_no" value="{{ old('contact_no') }}" type="number" class="block w-full mt-1 rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" name="contact_no" required>
                 <x-input-error :messages="$errors->get('contact_no')" class="mt-2" />
             </div>
         </div>
@@ -102,7 +102,7 @@
         </div>
 
         <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
+            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" href="{{ route('login') }}">
                 {{ __('Already registered?') }}
             </a>
 

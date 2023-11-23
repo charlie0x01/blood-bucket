@@ -44,8 +44,8 @@ class RegisteredUserController extends Controller
             'age' => ['required'],
             'contact_no' => ['required', 'digits:11'],
             'gender' => ['required', 'string', 'in:male,female'],
-            'blood_group_id' => ['required', 'numeric'],
-            'city_id' => ['required', 'numeric'],
+            'blood_group_id' => ['required'],
+            'city_id' => ['required'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 

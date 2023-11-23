@@ -50,7 +50,7 @@
                 <p class="text-sm mt-2 text-gray-800">
                     {{ __('Your email address is unverified.') }}
 
-                    <button form="send-verification" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    <button form="send-verification" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                         {{ __('Click here to re-send the verification email.') }}
                     </button>
                 </p>
@@ -64,25 +64,28 @@
             @endif
         </div>
 
+        @if($user->type != 'admin')
         <div class="mt-4">
             <label for="type" class="block font-medium text-sm text-gray-700">User Type</label>
+            @if($user->type == 'recipient')
             <div class="bg-blue-100 border-blue-500 text-blue-700 my-1 px-4 py-3 rounded relative" role="alert">
                 <strong class="font-bold">Info</strong>
                 <span class="block sm:inline">if you change your user type to Donor, you'll be logout unitl you verify your email.</span>
             </div>
-
-            <select id="type" name="type" class="block w-full mt-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                <option selected class="rounded-md border-gray-300 bg-white text-gray-900 focus:ring-indigo-200 focus:border-indigo-300">-- Select User Type --</option>
+            @endif
+            <select id="type" name="type" class="block w-full mt-1 rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                <option selected class="rounded-md border-gray-300 bg-white text-gray-900 focus:ring-blue-200 focus:border-blue-300">-- Select User Type --</option>
                 @if($user->type == 'donor')
-                <option value="donor" selected="rounded-md border-gray-300 bg-white text-gray-900 focus:ring-indigo-200 focus:border-indigo-300">Donor</option>
-                <option value="recipient" class="rounded-md border-gray-300 bg-white text-gray-900 focus:ring-indigo-200 focus:border-indigo-300">Recipient</option>
+                <option value="donor" selected="rounded-md border-gray-300 bg-white text-gray-900 focus:ring-blue-200 focus:border-blue-300">Donor</option>
+                <option value="recipient" class="rounded-md border-gray-300 bg-white text-gray-900 focus:ring-blue-200 focus:border-blue-300">Recipient</option>
                 @elseif($user->type == 'recipient')
-                <option value="donor" class="rounded-md border-gray-300 bg-white text-gray-900 focus:ring-indigo-200 focus:border-indigo-300">Donor</option>
-                <option value="recipient" selected class="rounded-md border-gray-300 bg-white text-gray-900 focus:ring-indigo-200 focus:border-indigo-300">Recipient</option>
+                <option value="donor" class="rounded-md border-gray-300 bg-white text-gray-900 focus:ring-blue-200 focus:border-blue-300">Donor</option>
+                <option value="recipient" selected class="rounded-md border-gray-300 bg-white text-gray-900 focus:ring-blue-200 focus:border-blue-300">Recipient</option>
                 @endif
                 <x-input-error :messages="$errors->get('type')" class="mt-2" />
             </select>
         </div>
+        @endif
 
         <div class="mt-4">
             <x-input-label for="age" :value="__('Age')" />
@@ -94,14 +97,17 @@
             <label for="gender" class="block font-medium text-sm text-gray-700">{{ __('Gender') }}</label>
 
             <div class="col-md-6">
-                <select name="gender" class="block w-full mt-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" aria-label="">
+                <select name="gender" class="block w-full mt-1 rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" aria-label="">
                     <option selected>-- Select Gender --</option>
                     @if($user->gender == 'male')
                     <option selected value="male">Male</option>
                     <option value="female">Female</option>
-                    @else
+                    @elseif($user->gender == 'female')
                     <option value="male">Male</option>
                     <option selected value="female">Female</option>
+                    @else 
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
                     @endif
                 </select>
                 <x-input-error :messages="$errors->get('gender')" class="mt-2" />
@@ -112,7 +118,7 @@
             <label for="blood_group_id" class="block font-medium text-sm text-gray-700">{{ __('Blood Group') }}</label>
 
             <div class="col-md-6">
-                <select name="blood_group_id" class="block w-full mt-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" aria-label="">
+                <select name="blood_group_id" class="block w-full mt-1 rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" aria-label="">
                     <option selected>-- Select Blood Group --</option>
                     @foreach($blood_groups as $blood_group)
                     @if($user->blood_group_id == $blood_group->id)
@@ -130,7 +136,7 @@
             <label for="city_id" class="block font-medium text-sm text-gray-700">{{ __('City') }}</label>
 
             <div class="col-md-6">
-                <select name="city_id" class="block w-full mt-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" aria-label="">
+                <select name="city_id" class="block w-full mt-1 rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" aria-label="">
                     <option selected>-- Select City --</option>
                     @foreach($cities as $city)
                     @if($user->city_id == $city->id)
@@ -148,7 +154,7 @@
             <label for="contact_no" class="block font-medium text-sm text-gray-700">{{ __('Contact No.') }}</label>
 
             <div class="col-md-6">
-                <input name="contact_no" id="contact_no" value="{{ old('contact_no', $user->contact_no) }}" type="number" class="block w-full mt-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+                <input name="contact_no" id="contact_no" value="{{ old('contact_no', $user->contact_no) }}" type="number" class="block w-full mt-1 rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" required>
                 <x-input-error :messages="$errors->get('contact_no')" class="mt-2" />
             </div>
         </div>

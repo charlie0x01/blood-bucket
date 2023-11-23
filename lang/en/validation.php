@@ -170,10 +170,22 @@ return [
             'in' => 'Please select a valid gender (Male or Female).',
         ],
         'blood_group_id' => [
+            'exists' => 'Please select a blood group.',
+        ],
+        'blood_group_id' => [
+            'required' => 'Please select a blood group.',
+        ],
+        'blood_group_id' => [
             'numeric' => 'Please select a blood group.',
         ],
         'city_id' => [
+            'exists' => 'Please select a city.',
+        ],
+        'city_id' => [
             'numeric' => 'Please select a city.',
+        ],
+        'city_id' => [
+            'required' => 'Please select a city.',
         ],
         'type' => [
             'in' => 'Please select a valid type (Donor or Recipient).',
@@ -181,6 +193,12 @@ return [
         'avatar' => [
             'required' => 'Please upload a profile picture.',
         ],
+        'hospital_name' => [
+            'required' => 'Please provide Hospital Name or Clinic Name'
+        ],
+        'need_on' => [
+            'after_or_equal' => 'The date must be a date after or equal to today.'
+        ]
     ],
 
     /*

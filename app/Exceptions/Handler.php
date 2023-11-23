@@ -2,6 +2,8 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Support\Facades\Session;
+use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
@@ -46,5 +48,23 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    protected function handleQueryException(QueryException $exception)
+    {
+        $errorCode = $exception->errorInfo[1];
+        if ($errorCode === 1062) {
+            Session::flash('error', 'Contact No. already exists. please provide a new one');
+            return redirect()->back();
+            // } elseif ($errorCode === YourSpecificErrorCode) {
+            //     Session::flash('error', 'Specific database error message.');
+            //     // Handle other specific database error codes
+            //     return redirect()->back();
+        }
+
+        // Default error handling for other database-related exceptions
+        // Session::flash('error', 'An error occurred while processing your request.');
+        Session::flash('error', $exception->getMessage());
+        return redirect()->back();
     }
 }
