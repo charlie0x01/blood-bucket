@@ -37,6 +37,8 @@ class UpdateProfileRequest extends FormRequest
             'city_id' => ['required', 'numeric'],
             'age' => ['required', 'numeric', 'digits:2'],
             'gender' => ['required'],
+            'type' => ['required', 'string', 'regex:(donor|recipient)'],
+            'avatar' => ['required']
         ];
     }
 }

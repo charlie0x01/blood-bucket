@@ -15,6 +15,8 @@ use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
+use Illuminate\Support\Facades\Storage;
+
 /**
  * Class UserService.
  */
@@ -79,7 +81,7 @@ class UserService extends BaseService
     {
         $user = $this->model::where('provider_id', $info->id)->first();
 
-        if (! $user) {
+        if (!$user) {
             DB::beginTransaction();
 
             try {
@@ -130,7 +132,7 @@ class UserService extends BaseService
 
             $user->syncRoles($data['roles'] ?? []);
 
-            if (! config('boilerplate.access.user.only_roles')) {
+            if (!config('boilerplate.access.user.only_roles')) {
                 $user->syncPermissions($data['permissions'] ?? []);
             }
         } catch (Exception $e) {
@@ -144,7 +146,7 @@ class UserService extends BaseService
         DB::commit();
 
         // They didn't want to auto verify the email, but do they want to send the confirmation email to do so?
-        if (! isset($data['email_verified']) && isset($data['send_confirmation_email']) && $data['send_confirmation_email'] === '1') {
+        if (!isset($data['email_verified']) && isset($data['send_confirmation_email']) && $data['send_confirmation_email'] === '1') {
             $user->sendEmailVerificationNotification();
         }
 
@@ -174,11 +176,11 @@ class UserService extends BaseService
                 'city_id' => $data['city_id']
             ]);
 
-            if (! $user->isMasterAdmin()) {
+            if (!$user->isMasterAdmin()) {
                 // Replace selected roles/permissions
                 $user->syncRoles($data['roles'] ?? []);
 
-                if (! config('boilerplate.access.user.only_roles')) {
+                if (!config('boilerplate.access.user.only_roles')) {
                     $user->syncPermissions($data['permissions'] ?? []);
                 }
             }
@@ -191,8 +193,8 @@ class UserService extends BaseService
         event(new UserUpdated($user));
 
         DB::commit();
-
         return $user;
+        
     }
 
     /**
@@ -202,21 +204,37 @@ class UserService extends BaseService
      */
     public function updateProfile(User $user, array $data = []): User
     {
+        if ($data['type'] == 'donor' && auth()->user()->type == 'recipient')
+            $user->email_verified_at = null;
+
+        if ($data['type'] == 'recipient' && auth()->user()->type == 'donor')
+            $user->email_verified_at = now();
+
+        $destination = 'public/avatars';
+        // update file name
+        $filename = auth()->user()->email . '.' . $data['avatar']->extension();
+        // path
+        $path = 'storage/avatars/' . $filename;
+        // store
+        $data['avatar']->storeAs($destination, $filename);
+
+
         $user->name = $data['name'] ?? null;
         $user->age = $data['age'] ?? $user->age;
         $user->gender = $data['gender'] ?? $user->gender;
         $user->contact_no = $data['contact_no'] ?? $user->contact_no;
         $user->blood_group_id = $data['blood_group_id'] ?? $user->blood_group_id;
         $user->city_id = $data['city_id'] ?? $user->city_id;
+        $user->type = $data['type'] ?? $user->type;
+        $user->avatar = $path ?? $user->avatar;
 
         if ($user->canChangeEmail() && $user->email !== $data['email']) {
             $user->email = $data['email'];
             $user->email_verified_at = null;
-            
+
             $user->sendEmailVerificationNotification();
             session()->flash('resent', true);
         }
-
         return tap($user)->save();
     }
 
@@ -232,7 +250,7 @@ class UserService extends BaseService
     {
         if (isset($data['current_password'])) {
             throw_if(
-                ! Hash::check($data['current_password'], $user->password),
+                !Hash::check($data['current_password'], $user->password),
                 new GeneralException(__('That is not your old password.'))
             );
         }
@@ -337,7 +355,7 @@ class UserService extends BaseService
     protected function createUser(array $data = []): User
     {
         return $this->model::create([
-            'type' => $data['type'] ?? $this->model::TYPE_USER,
+            'type' => $data['type'] ?? $this->model::TYPE_DONOR,
             'name' => $data['name'] ?? null,
             'email' => $data['email'] ?? null,
             'contact_no' => $data['contact_no'],
@@ -348,8 +366,27 @@ class UserService extends BaseService
             'password' => $data['password'] ?? null,
             'provider' => $data['provider'] ?? null,
             'provider_id' => $data['provider_id'] ?? null,
-            'email_verified_at' => $data['email_verified_at'] ?? null,
+            'email_verified_at' => $data['type'] == "recipient" ? now() : null,
             'active' => $data['active'] ?? true,
         ]);
+    }
+
+    // save user avatar
+    public function uploadImage($file)
+    {
+
+        $destination = 'public/avatars';
+        // update file name
+        $filename = auth()->user()->email . '.' . $file . extension();
+        // path
+        $path = 'storage/avatars' . $filename;
+        // store
+        $file->storeAs($destination, $filename);
+
+        return $path;
+    }
+
+    private function changeAvatar($file)
+    {
     }
 }

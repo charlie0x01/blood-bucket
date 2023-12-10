@@ -1,9 +1,17 @@
-<x-forms.patch :action="route('frontend.user.profile.update')">
+<x-forms.patch :action="route('frontend.user.profile.update')" enctype="multipart/form-data">
+    <div class="form-group row">
+        <label for="name" class="col-md-3 col-form-label text-md-right">@lang('Avatar')</label>
+        <div class="col-md-9 d-flex flex-row">
+            <img id="preview" src="{{ $logged_in_user->avatar }}" alt="{{ $logged_in_user->avatar }}" class="user-profile-image mb-2 mr-2" width="150px" height="150px" />
+            <input id="avatar-input" type="file" onchange="loadImage(event)" accept="image/jpg" name="avatar" class="form-control" placeholder="{{ __('choose avatar') }}" required />
+        </div>
+    </div>
+    </div><!--form-group-->
     <div class="form-group row">
         <label for="name" class="col-md-3 col-form-label text-md-right">@lang('Name')</label>
 
         <div class="col-md-9">
-            <input type="text" name="name" class="form-control" placeholder="{{ __('Name') }}" value="{{ old('name') ?? $logged_in_user->name }}" required autofocus autocomplete="name" />
+            <input type="text" name="name" class="form-control" placeholder="{{ __('Name') }}" value="{{ old('name') ?? $logged_in_user->name }}" required autocomplete="name" />
         </div>
     </div><!--form-group-->
 
@@ -20,6 +28,34 @@
         </div>
     </div><!--form-group-->
     @endif
+
+    <div class="form-group row">
+        <label for="type" class="col-md-3 col-form-label text-md-right">@lang('User Type')</label>
+
+        <div class="col-md-9">
+            @if($logged_in_user->type == "recipient")
+            <x-utils.alert type="info" class="mb-3" :dismissable="false">
+                <i class="fas fa-info-circle"></i> @lang('If you change your user type to donor, you will be logged out until you confirm your e-mail address.')
+            </x-utils.alert>
+            @endif
+
+            <select id="type" name="type" class="form-control" aria-label="">
+                @if ($logged_in_user->type == 'donor')
+                <option>-- Select User Type --</option>
+                <option selected value="donor">Donor</option>
+                <option value="recipient">Recipient</option>
+                @elseif ($logged_in_user->type == 'recipient')
+                <option selected>-- Select User Type --</option>
+                <option value="donor">Donor</option>
+                <option selected value="recipient">Recipient</option>
+                @else
+                <option selected>-- Select User Type --</option>
+                <option value="donor">Donor</option>
+                <option value="recipient">Recipient</option>
+                @endif
+            </select>
+        </div>
+    </div><!--form-group-->
 
     <div class="row form-group">
         <label for="gender" class="col-md-3 col-form-label text-md-right">{{ __('Gender') }}</label>

@@ -11,11 +11,20 @@
                     <x-slot name="header">
                         @lang('My Account')
                     </x-slot>
-
+                    
                     <x-slot name="body">
-                        <nav>
+                        <div class="p-3">
+                            <div class="m-3">
+                                @include('frontend.user.account.tabs.information')
+                            </div>
+                            <div class="m-3">
+                                <h5 class="mb-3">Update Password</h5>
+                                @include('frontend.user.account.tabs.password')
+                            </div>
+                        </div>
+                        <!-- <nav>
                             <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                <x-utils.link
+                                    <x-utils.link
                                     :text="__('My Profile')"
                                     class="nav-link active"
                                     id="my-profile-tab"
@@ -47,7 +56,7 @@
                                         aria-selected="false" />
                                 @endif
 
-                                <!-- <x-utils.link
+                                <x-utils.link
                                     :text="__('Two Factor Authentication')"
                                     class="nav-link"
                                     id="two-factor-authentication-tab"
@@ -55,29 +64,27 @@
                                     href="#two-factor-authentication"
                                     role="tab"
                                     aria-controls="two-factor-authentication"
-                                    aria-selected="false"/> -->
+                                    aria-selected="false"/>
                             </div>
-                        </nav>
+                        </nav> -->
 
-                        <div class="tab-content" id="my-profile-tabsContent">
-                            <div class="tab-pane fade pt-3 show active" id="my-profile" role="tabpanel" aria-labelledby="my-profile-tab">
+                        <!-- <div class="tab-content" id="my-profile-tabsContent">
+                            <!-- <div class="tab-pane fade pt-3 show active" id="my-profile" role="tabpanel" aria-labelledby="my-profile-tab">
                                 @include('frontend.user.account.tabs.profile')
-                            </div><!--tab-profile-->
+                            </div>
 
                             <div class="tab-pane fade pt-3" id="information" role="tabpanel" aria-labelledby="information-tab">
-                                @include('frontend.user.account.tabs.information')
-                            </div><!--tab-information-->
+                            </div>
 
                             @if (! $logged_in_user->isSocial())
                                 <div class="tab-pane fade pt-3" id="password" role="tabpanel" aria-labelledby="password-tab">
-                                    @include('frontend.user.account.tabs.password')
-                                </div><!--tab-password-->
+                                </div>
                             @endif
 
                             <div class="tab-pane fade pt-3" id="two-factor-authentication" role="tabpanel" aria-labelledby="two-factor-authentication-tab">
                                 @include('frontend.user.account.tabs.two-factor-authentication')
-                            </div><!--tab-information-->
-                        </div><!--tab-content-->
+                            </div>
+                        </div> -->
                     </x-slot>
                 </x-frontend.card>
             </div><!--col-md-10-->

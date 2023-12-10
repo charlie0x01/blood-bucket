@@ -2,6 +2,8 @@
 
 namespace App\Domains\Auth\Models\Traits\Method;
 
+use App\Domains\Auth\Models\User;
+use Auth;
 use Illuminate\Support\Collection;
 
 /**
@@ -108,6 +110,10 @@ trait UserMethod
      */
     public function getAvatar($size = null)
     {
-        return 'https://gravatar.com/avatar/'.md5(strtolower(trim($this->email))).'?s='.config('boilerplate.avatar.size', $size).'&d=mp';
+        dd(auth()->user()->avatar);
+        if (User::where('id', auth()->user()->id)->get(['avatar']) != null)
+            return 'storage/avatars/'.auth()->user()->email.'.png';
+        else
+            return 'https://gravatar.com/avatar/' . md5(strtolower(trim($this->email))) . '?s=' . config('boilerplate.avatar.size', $size) . '&d=mp';
     }
 }

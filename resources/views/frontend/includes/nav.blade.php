@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-danger">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container">
         <x-utils.link :href="route('frontend.index')" :text="appName()" class="navbar-brand" />
 

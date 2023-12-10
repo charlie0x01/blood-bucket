@@ -1,7 +1,13 @@
 <div class="table-responsive">
     <table class="table table-striped table-hover table-bordered mb-0">
+        
         <tr>
-            <th>@lang('Type')</th>
+            <th>@lang('Avatar')</th>
+            <td><img src="{{ $logged_in_user->avatar }}" class="user-profile-image" /></td>
+        </tr>
+        
+        <tr>
+            <th>@lang('User Type')</th>
             <td>{{ ucfirst($logged_in_user->type) }}</td>
         </tr>
 
@@ -15,26 +21,36 @@
             <td>{{ $logged_in_user->email }}</td>
         </tr>
 
-        @if ($logged_in_user->isSocial())
-            <tr>
-                <th>@lang('Social Provider')</th>
-                <td>{{ ucfirst($logged_in_user->provider) }}</td>
-            </tr>
-        @endif
-
         <tr>
-            <th>@lang('Timezone')</th>
-            <td>{{ $logged_in_user->timezone ? str_replace('_', ' ', $logged_in_user->timezone) : __('N/A') }}</td>
+            <th>@lang('Age')</th>
+            <td>{{ $logged_in_user->age}}</td>
         </tr>
 
         <tr>
-            <th>@lang('Account Created')</th>
-            <td>@displayDate($logged_in_user->created_at) ({{ $logged_in_user->created_at->diffForHumans() }})</td>
+            <th>@lang('Gender')</th>
+            <td>{{ $logged_in_user->gender }}</td>
         </tr>
 
         <tr>
-            <th>@lang('Last Updated')</th>
-            <td>@displayDate($logged_in_user->updated_at) ({{ $logged_in_user->updated_at->diffForHumans() }})</td>
+            <th>@lang('Contact No.')</th>
+            <td>{{ $logged_in_user->contact_no }}</td>
         </tr>
+        <tr>
+            <th>@lang('City')</th>
+            @foreach($cities as $city)
+            @if($city->id == $logged_in_user->city_id )
+            <td>{{ $city->name }}</td>
+            @endif
+            @endforeach
+        </tr>
+        <tr>
+            <th>@lang('Blood Group')</th>
+            @foreach($blood_groups as $blood_group)
+            @if($blood_group->id == $logged_in_user->blood_group_id )
+            <td>{{ $blood_group->name }}</td>
+            @endif
+            @endforeach
+        </tr>
+
     </table>
 </div><!--table-responsive-->

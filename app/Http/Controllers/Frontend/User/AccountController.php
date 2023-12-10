@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Frontend\User;
 
+use App\Domains\Auth\Models\User;
 use App\Models\BloodGroup;
 use App\Models\City;
+use Auth;
 
 /**
  * Class AccountController.

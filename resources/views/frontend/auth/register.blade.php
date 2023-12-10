@@ -34,7 +34,7 @@
                             <label for="name" class="col-md-4 col-form-label text-md-right">@lang('Password')</label>
 
                             <div class="col-md-6">
-                                <input type="password" name="password" id="password" class="form-control" placeholder="{{ __('Password') }}" maxlength="100" required autocomplete="new-password" />
+                                <input type="password" value="{{ old('email') }}" name="password" class="form-control" placeholder="{{ __('Password') }}" maxlength="100" required autocomplete="new-password" />
                             </div>
                         </div><!--form-group-->
 
@@ -42,10 +42,10 @@
                             <label for="name" class="col-md-4 col-form-label text-md-right">@lang('Password Confirmation')</label>
 
                             <div class="col-md-6">
-                                <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" placeholder="{{ __('Password Confirmation') }}" maxlength="100" required autocomplete="new-password" />
+                                <input type="password" value="{{ old('password_confirmation') }}" name="password_confirmation" id="password_confirmation" class="form-control" placeholder="{{ __('Password Confirmation') }}" maxlength="100" required autocomplete="new-password" />
                             </div>
                         </div><!--form-group-->
-                        
+
                         <div class="row mb-3">
                             <label for="gender" class="col-md-4 col-form-label text-md-right">{{ __('Gender') }}</label>
 
@@ -57,23 +57,24 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="row mb-3">
-                            <label for="age" class="col-md-4 col-form-label text-md-right">{{ __('Age') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="age" type="number" min="18" max="60" class="form-control" name="age" required>
-                            </div>
-                        </div>
 
                         <div class="row mb-3">
                             <label for="type" class="col-md-4 col-form-label text-md-right">{{ __('User Type') }}</label>
 
                             <div class="col-md-6">
-                                <select name="type" class="form-control" aria-label="">
+                                <select onchange="ageLimit(event)" name="type" class="form-control" aria-label="">
                                     <option selected>-- Select User Type --</option>
                                     <option value="donor">Donor</option>
                                     <option value="recipient">Recipient</option>
                                 </select>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="age" class="col-md-4 col-form-label text-md-right">{{ __('Age') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="r_age" value="{{ old('age') }}" type="number" min="18" max="60" class="form-control" name="age" required>
                             </div>
                         </div>
 
@@ -107,7 +108,7 @@
                             <label for="contact_no" class="col-md-4 col-form-label text-md-right">{{ __('Contact No.') }}</label>
 
                             <div class="col-md-6">
-                                <input id="contact_no" type="number" class="form-control" name="contact_no" required>
+                                <input id="contact_no" value="{{ old('contact_no') }}" type="number" class="form-control" name="contact_no" required>
                             </div>
                         </div>
 

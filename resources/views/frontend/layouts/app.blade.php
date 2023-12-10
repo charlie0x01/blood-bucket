@@ -15,6 +15,9 @@
     <link href="{{ mix('css/frontend.css') }}" rel="stylesheet">
     <livewire:styles />
     @stack('after-styles')
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="{{ asset('js/myscript.js') }}" defer></script>
 </head>
 <body>
     @include('includes.partials.read-only')

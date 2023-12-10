@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->bigIncrements('id');
             $table->enum('type', [User::TYPE_ADMIN, User::TYPE_USER, User::TYPE_DONOR, User::TYPE_RECIPIENT])->default(User::TYPE_USER);
             $table->string('name');
+            $table->string('avatar')->nullable();
             $table->string('email')->unique()->nullable();
             $table->string('contact_no', 13)->unique()->nullable();
             $table->string('gender', 6)->nullable();
