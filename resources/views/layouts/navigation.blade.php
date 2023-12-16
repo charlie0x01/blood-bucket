@@ -12,8 +12,28 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    <x-nav-link :href="'/'" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('blood-requests.get-all', ['id' => auth()->user()->id])" :active="request()->routeIs('blood-requests.get-all')">
+                        {{ __('My Blood Requests') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('blood-requests.new', ['id' => auth()->user()->id])" :active="request()->routeIs('blood-requests.new')">
+                        {{ __('New Blood Requests') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('blood-requests.accepted', ['id' => auth()->user()->id])" :active="request()->routeIs('blood-requests.accepted')">
+                        {{ __('Requests You Accepeted') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('blood-request.donations', ['id' => auth()->user()->id])" :active="request()->routeIs('blood-request.donations')">
+                        {{ __('Donation History') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -23,7 +43,12 @@
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                            <div>{{ Auth::user()->name }}</div>
+                            <div class="flex gap-3 items-center">
+                                <div>{{ Auth::user()->name }}</div>
+                                @if(Auth::user()->avatar != null)
+                                <img id="preview" src="{{ Auth::user()->avatar }}" alt="User Avatar" class="w-10 h-10 rounded-full object-cover" />
+                                @endif
+                            </div>
 
                             <div class="ml-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -42,8 +67,7 @@
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
 
-                            <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault();
+                            <x-dropdown-link :href="route('logout')" onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                                 {{ __('Log Out') }}
                             </x-dropdown-link>
@@ -88,8 +112,7 @@
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
 
-                    <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault();
+                    <x-responsive-nav-link :href="route('logout')" onclick="event.preventDefault();
                                         this.closest('form').submit();">
                         {{ __('Log Out') }}
                     </x-responsive-nav-link>

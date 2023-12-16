@@ -23,7 +23,7 @@
 
         <div class="flex gap-4">
             <div class="w-40 h-40 flex items-center justify-center rounded-full">
-                <img id="preview" src="{{ $user->avatar }}" alt="User Avatar" class="w-full h-full object-cover rounded-full" />
+                <img id="preview" src="{{ Auth::user()->avatar }}" alt="User Avatar" class="w-full h-full object-cover rounded-full" />
             </div>
             <div class="flex flex-col w-[100px] gap-4">
                 <input id="avatar" onchange="loadImage(event)" name="avatar" type="file" accept="image/*" />

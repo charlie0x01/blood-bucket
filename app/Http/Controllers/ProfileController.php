@@ -6,6 +6,7 @@ use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\BloodGroup;
 use App\Models\City;
 use App\Models\User;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -42,25 +43,44 @@ class ProfileController extends Controller
 
         // check if user have upload avatar
         if ($request->avatar != null) {
-            $destination = 'public/avatars';
-            // update file name
-            $filename = time() . '.' . $request->avatar->extension();
-            // path
-            $path = 'storage/avatars/' . $filename;
-            // store
-            $request->avatar->storeAs($destination, $filename);
-            $user->avatar = $path ?? null;
+            if ($user->avatar == null) {
+                $destination = 'public';
+                // update file name
+                $filename = time() . '.' . $request->avatar->extension();
+                // path
+                $path = 'storage/' . $filename;
+                // store
+                $request->avatar->storeAs($destination, $filename);
+                $user->avatar = $path;
+            } else {
+                $filename = basename($user->avatar);
+                if (Storage::disk('public')->exists($filename)) {
+                    Storage::disk('public')->delete($filename);
+                    
+                    // now upload new avatar
+                    $destination = 'public';
+                    // update file name
+                    $filename = time() . '.' . $request->avatar->extension();
+                    // path
+                    $path = 'storage/' . $filename;
+                    // store
+                    $request->avatar->storeAs($destination, $filename);
+                    $user->avatar = $path;
+                } else {
+                    $user->avatar = null;
+                }
+            }
         }
 
         // check if user wants to change user type
         // if user is recipient and changing to donor, set verified to null
-        if($user->type == "recipient" && $request->type == "donor")
+        if ($user->type == "recipient" && $request->type == "donor")
             $user->email_verified_at = null;
-        
+
         // check if user in donor and changing to recipient
-        else if($user->type == "donor" && $request->type == "recipient")
+        else if ($user->type == "donor" && $request->type == "recipient")
             $user->email_verified_at = now();
-            
+
 
         // dd($user, $request);
         $user->name = $request->name ?? $user->name;
@@ -79,15 +99,26 @@ class ProfileController extends Controller
 
     public function remove(Request $request): RedirectResponse
     {
-        $user = User::find(Auth::id());
-        if ($user->avatar != null) {
-            if (Storage::disk('public')->exists(`$user->avatar`)) {
-                Storage::disk('public')->delete(`$user->avatar`);
+        try {
+            //code...
+            $user = User::find(Auth::id());
+            if ($user->avatar != null) {
+                $filename = basename($user->avatar);
+                if (Storage::disk('public')->exists($filename)) {
+                    Storage::disk('public')->delete($filename);
+                    $user->avatar = null;
+                    $user->update();
+                    Session::flash('success', 'Avatar removed');
+                } else {
+                    Session::flash('error', 'file not found');
+                }
             }
+
+            return Redirect::route('profile.edit');
+        } catch (\Exception $e) {
+            Session::flash('error', 'File not found');
+            return redirect()->route('profile.edit');
         }
-        // $user->avatar = null;
-        // $user->update();
-        return Redirect::route('profile.edit')->with('status', 'avatar-removed');
     }
 
     /**

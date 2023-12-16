@@ -17,10 +17,10 @@ return new class extends Migration
             $table->id();
             $table->string('recipient_name');
             $table->unsignedBigInteger('blood_group_id');
-            $table->unsignedBigInteger('city_id');
+            $table->unsignedBigInteger('city_id')->nullable();
             $table->float('age', 5, 2)->nullable();
             $table->string('gender')->nullable();
-            $table->string('contact_no', 13)->unique();
+            $table->string('contact_no', 13)->nullable();
             $table->text('address')->nullable();
             $table->string('hospital_name')->nullable();
             $table->unsignedBigInteger('sender_id')->nullable();
@@ -29,6 +29,7 @@ return new class extends Migration
             $table->unsignedBigInteger('approved_by')->nullable();
             $table->boolean('emergency_flag');
             $table->date('need_on');
+            $table->string('blood_report')->nullable();
 
             $table->foreign('blood_group_id')->references('id')->on('blood_groups');
             $table->foreign('city_id')->references('id')->on('cities');
